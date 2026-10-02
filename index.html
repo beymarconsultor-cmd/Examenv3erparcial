@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>AstroExplora — Descubre el Universo</title>
+
+  <meta name="description"
+    content="AstroExplora: página web educativa e interactiva sobre astronomía. Conoce planetas, estrellas, galaxias y otros objetos del universo.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@300;400;600&display=swap"
+    rel="stylesheet">
+
+  <!-- Bootstrap 5 -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet">
+
+  <!-- Tu CSS -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- Fondo de estrellas -->
+  <canvas id="starfield" aria-hidden="true"></canvas>
+
+  <!-- =========================
+       BARRA DE NAVEGACIÓN
+       ========================= -->
+  <header class="nav" id="nav">
+
+    <a href="#inicio" class="nav__logo">
+      Astro<span>Explora</span>
+    </a>
+
+    <nav class="nav__links" id="navLinks">
+      <a href="#planetas">Planetas</a>
+      <a href="#estrellas">Estrellas</a>
+      <a href="#galaxias">Galaxias</a>
+      <a href="#objetos">Objetos</a>
+      <a href="#curiosidades">Curiosidades</a>
+    </nav>
+
+    <button class="nav__toggle" id="navToggle" aria-label="Abrir menú">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+  </header>
+
+
+  <!-- =========================
+       HERO
+       ========================= -->
+  <section class="hero" id="inicio">
+
+    <div class="hero__content">
+
+      <p class="hero__tag">
+        Educación · Interacción · Descubrimiento
+      </p>
+
+      <h1 class="hero__title">
+        Explora el
+        <span class="hero__gradient">Universo</span>
+      </h1>
+
+      <p class="hero__subtitle">
+        Un viaje interactivo por planetas, estrellas, galaxias y los misterios más
+        fascinantes del cosmos. Diseñado para mentes curiosas de todas las edades.
+      </p>
+
+      <div class="hero__actions">
+
+        <a href="#planetas" class="btn btn--primary">
+          Comenzar el viaje
+        </a>
+
+        <a href="#curiosidades" class="btn btn--ghost">
+          Datos curiosos
+        </a>
+
+      </div>
+
+    </div>
+
+    <div class="hero__planet" aria-hidden="true">
+      <div class="planet planet--hero"></div>
+      <div class="planet__ring"></div>
+    </div>
+
+    <a href="#planetas" class="hero__scroll" aria-label="Desplazarse hacia abajo">
+      <span></span>
+    </a>
+
+  </section>
+
+
+  <!-- =========================
+       INTRO
+       ========================= -->
+  <section class="intro">
+
+    <h2 class="section-title">
+      ¿Qué es AstroExplora?
+    </h2>
+
+    <p class="intro__text">
+      AstroExplora es un espacio educativo donde la astronomía se vive de forma interactiva.
+      Aquí no solo lees sobre el universo: lo exploras. Cada sección está pensada para
+      despertar <strong>asombro, curiosidad y emoción</strong>, con datos reales presentados
+      de forma visual y amigable para niños, jóvenes y adultos.
+    </p>
+
+    <div class="intro__stats">
+
+      <div class="stat">
+        <span class="stat__num" data-count="8">0</span>
+        <span class="stat__label">
+          Planetas en nuestro sistema
+        </span>
+      </div>
+
+      <div class="stat">
+        <span class="stat__num" data-count="100">0</span>
+        <span class="stat__label">
+          Millones de estrellas en la Vía Láctea
+        </span>
+      </div>
+
+      <div class="stat">
+        <span class="stat__num" data-count="2">0</span>
+        <span class="stat__label">
+          Billones de galaxias en el universo
+        </span>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================================================
+       PLANETAS
+       ========================================================= -->
+  <section class="section" id="planetas">
+
+    <h2 class="section-title">
+      Los Planetas
+    </h2>
+
+    <p class="section-sub">
+      Haz clic en cada planeta para descubrir sus secretos
+    </p>
+
+    <!-- Tarjetas originales -->
+    <div class="planet-grid" id="planetGrid"></div>
+
+
+    <!-- CARRUSEL PLANETAS -->
+    <div id="carouselPlanetas"
+         class="carousel slide carousel-fade astro-carousel"
+         data-bs-ride="carousel"
+         data-bs-interval="3500">
+
+      <!-- Indicadores -->
+      <div class="carousel-indicators">
+
+        <button type="button"
+          data-bs-target="#carouselPlanetas"
+          data-bs-slide-to="0"
+          class="active"
+          aria-current="true"
+          aria-label="Tierra">
+        </button>
+
+        <button type="button"
+          data-bs-target="#carouselPlanetas"
+          data-bs-slide-to="1"
+          aria-label="Marte">
+        </button>
+
+        <button type="button"
+          data-bs-target="#carouselPlanetas"
+          data-bs-slide-to="2"
+          aria-label="Júpiter">
+        </button>
+
+        <button type="button"
+          data-bs-target="#carouselPlanetas"
+          data-bs-slide-to="3"
+          aria-label="Saturno">
+        </button>
+
+      </div>
+
+
+      <!-- Imágenes -->
+      <div class="carousel-inner">
+
+        <div class="carousel-item active">
+          <img
+            src="https://commons.wikimedia.org/wiki/Special:FilePath/Earth_Eastern_Hemisphere.jpg"
+            alt="Planeta Tierra">
+          <div class="carousel-caption">
+            <h3>La Tierra</h3>
+            <p>Nuestro hogar en el universo.</p>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <img
+            src="https://commons.wikimedia.org/wiki/Special:FilePath/OSIRIS_Mars_true_color.jpg"
+            alt="Planeta Marte">
+          <div class="carousel-caption">
+            <h3>Marte</h3>
+            <p>El planeta rojo.</p>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <img
+            src="https://commons.wikimedia.org/wiki/Special:FilePath/Jupiter.jpg"
+            alt="Planeta Júpiter">
+          <div class="carousel-caption">
+            <h3>Júpiter</h3>
+            <p>El gigante gaseoso.</p>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <img
+            src="https://commons.wikimedia.org/wiki/Special:FilePath/Saturn_during_Equinox.jpg"
+            alt="Planeta Saturno">
+          <div class="carousel-caption">
+            <h3>Saturno</h3>
+            <p>El planeta de los anillos.</p>
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- Anterior -->
+      <button class="carousel-control-prev"
+        type="button"
+        data-bs-target="#carouselPlanetas"
+        data-bs-slide="prev">
+
+        <span class="carousel-control-prev-icon"
+          aria-hidden="true">
+        </span>
+
+        <span class="visually-hidden">
+          Anterior
+        </span>
+
+      </button>
+
+
+      <!-- Siguiente -->
+      <button class="carousel-control-next"
+        type="button"
+        data-bs-target="#carouselPlanetas"
+        data-bs-slide="next">
+
+        <span class="carousel-control-next-icon"
+          aria-hidden="true">
+        </span>
+
+        <span class="visually-hidden">
+          Siguiente
+        </span>
+
+      </button>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================================================
+       ESTRELLAS
+       ========================================================= -->
+  <section class="section" id="estrellas">
+
+    <h2 class="section-title">
+      Las Estrellas
+    </h2>
+
+    <p class="section-sub">
+      Esferas de plasma que iluminan el cosmos con su propia luz
+    </p>
+
+    <div class="star-grid" id="starGrid"></div>
+
+
+    <!-- CARRUSEL ESTRELLAS -->
+    <div id="carouselEstrellas"
+         class="carousel slide carousel-fade astro-carousel"
+         data-bs-ride="carousel"
+         data-bs-interval="3500">
+
+      <div class="carousel-indicators">
+
+        <button type="button"
+          data-bs-target="#carouselEstrellas"
+          data-bs-slide-to="0"
+          class="active"
+          aria-current="true"
+          aria-label="El Sol">
+        </button>
+
+        <button type="button"
+          data-bs-target="#carouselEstrellas"
+          data-bs-slide-to="1"
+          aria-label="Sirio">
+        </button>
+
+        <button type="button"
+          data-bs-target="#carouselEstrellas"
+          data-bs-slide-to="2"
+          aria-label="Betelgeuse">
+        </button>
+
+      </div>
+
+
+      <div class="carousel-inner">
+
+        <div class="carousel-item active">
+          <img
+            src="https://commons.wikimedia.org/wiki/Special:FilePath/The_Sun_by_the_Atmospheric_Imaging_Assembly_of_NASA%27s_Solar_Dynamics_Observatory_-_20100819.jpg"
+            alt="El Sol">
+          <div class="carousel-caption">
+            <h3>El Sol</h3>
+            <p>Nuestra estrella.</p>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <img
+            src="https://commons.wikimedia.org/wiki/Special:FilePath/Sirius_A_and_B_Hubble.jpg"
+            alt="Estrella Sirio">
+          <div class="carousel-caption">
+            <h3>Sirio</h3>
+            <p>Una de las estrellas más brillantes del cielo.</p>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <img
+            src="https://commons.wikimedia.org/wiki/Special:FilePath/Betelgeuse_star.jpg"
+            alt="Betelgeuse">
+          <div class="carousel-caption">
+            <h3>Betelgeuse</h3>
+            <p>Una enorme supergigante roja.</p>
+          </div>
+        </div>
+
+      </div>
+
+
+      <button class="carousel-control-prev"
+        type="button"
+        data-bs-target="#carouselEstrellas"
+        data-bs-slide="prev">
+
+        <span class="carousel-control-prev-icon"></span>
+        <span class="visually-hidden">Anterior</span>
+
+      </button>
+
+      <button class="carousel-control-next"
+        type="button"
+        data-bs-target="#carouselEstrellas"
+        data-bs-slide="next">
+
+        <span class="carousel-control-next-icon"></span>
+        <span class="visually-hidden">Siguiente</span>
+
+      </button>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================================================
+       GALAXIAS
+       ========================================================= -->
+  <section class="section" id="galaxias">
+
+    <h2 class="section-title">
+      Las Galaxias
+    </h2>
+
+    <p class="section-sub">
+      Ciudades de estrellas, gas y polvo unidas por la gravedad
+    </p>
+
+    <div class="galaxy-grid" id="galaxyGrid"></div>
+
+
+    <!-- CARRUSEL GALAXIAS -->
+    <div id="carouselGalaxias"
+         class="carousel slide carousel-fade astro-carousel"
+         data-bs-ride="carousel"
+         data-bs-interval="3500">
+
+      <div class="carousel-indicators">
+
+        <button type="button"
+          data-bs-target="#carouselGalaxias"
+          data-bs-slide-to="0"
+          class="active"
+          aria-current="true"
+          aria-label="Vía Láctea">
+        </button>
+
+        <button type="button"
+          data-bs-target="#carouselGalaxias"
+          data-bs-slide-to="1"
+          aria-label="Andrómeda">
+        </button>
+
+        <button type="button"
+          data-bs-target="#carouselGalaxias"
+          data-bs-slide-to="2"
+          aria-label="Galaxia del Sombrero">
+        </button>
+
+      </div>
+
+
+      <div class="carousel-inner">
+
+        <div class="carousel-item active">
+          <img
+            src="https://commons.wikimedia.org/wiki/Special:FilePath/Milky_Way_Arch.jpg"
+            alt="Vía Láctea">
+
+          <div class="carousel-caption">
+            <h3>Vía Láctea</h3>
+            <p>Nuestra galaxia.</p>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <img
+            src="https://commons.wikimedia.org/wiki/Special:FilePath/Andromeda_Galaxy_(with_h-alpha).jpg"
+            alt="Galaxia Andrómeda">
+
+          <div class="carousel-caption">
+            <h3>Andrómeda</h3>
+            <p>Nuestra galaxia vecina.</p>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <img
+            src="https://commons.wikimedia.org/wiki/Special:FilePath/Sombrero_Galaxy_in_infrared.jpg"
+            alt="Galaxia del Sombrero">
+
+          <div class="carousel-caption">
+            <h3>Galaxia del Sombrero</h3>
+            <p>Una galaxia con una estructura impresionante.</p>
+          </div>
+        </div>
+
+      </div>
+
+
+      <button class="carousel-control-prev"
+        type="button"
+        data-bs-target="#carouselGalaxias"
+        data-bs-slide="prev">
+
+        <span class="carousel-control-prev-icon"></span>
+        <span class="visually-hidden">Anterior</span>
+
+      </button>
+
+      <button class="carousel-control-next"
+        type="button"
+        data-bs-target="#carouselGalaxias"
+        data-bs-slide="next">
+
+        <span class="carousel-control-next-icon"></span>
+        <span class="visually-hidden">Siguiente</span>
+
+      </button>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================================================
+       OTROS OBJETOS
+       ========================================================= -->
+  <section class="section" id="objetos">
+
+    <h2 class="section-title">
+      Otros Objetos del Universo
+    </h2>
+
+    <p class="section-sub">
+      Los fenómenos más extremos y misteriosos del cosmos
+    </p>
+
+    <div class="object-grid" id="objectGrid"></div>
+
+
+    <!-- CARRUSEL OBJETOS -->
+    <div id="carouselObjetos"
+         class="carousel slide carousel-fade astro-carousel"
+         data-bs-ride="carousel"
+         data-bs-interval="3500">
+
+      <div class="carousel-indicators">
+
+        <button type="button"
+          data-bs-target="#carouselObjetos"
+          data-bs-slide-to="0"
+          class="active"
+          aria-current="true"
+          aria-label="Agujero negro">
+        </button>
+
+        <button type="button"
+          data-bs-target="#carouselObjetos"
+          data-bs-slide-to="1"
+          aria-label="Nebulosa">
+        </button>
+
+        <button type="button"
+          data-bs-target="#carouselObjetos"
+          data-bs-slide-to="2"
+          aria-label="Supernova">
+        </button>
+
+        <button type="button"
+          data-bs-target="#carouselObjetos"
+          data-bs-slide-to="3"
+          aria-label="Cometa">
+        </button>
+
+      </div>
+
+
+      <div class="carousel-inner">
+
+        <div class="carousel-item active">
+          <img
+            src="https://commons.wikimedia.org/wiki/Special:FilePath/Black_hole_-_Messier_87_crop_max_res.jpg"
+            alt="Agujero negro">
+
+          <div class="carousel-caption">
+            <h3>Agujeros Negros</h3>
+            <p>Regiones donde la gravedad domina incluso a la luz.</p>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <img
+            src="https://commons.wikimedia.org/wiki/Special:FilePath/Orion_Nebula_-_Hubble_2006_mosaic_18000.jpg"
+            alt="Nebulosa de Orión">
+
+          <div class="carousel-caption">
+            <h3>Nebulosas</h3>
+            <p>Cunas donde nacen nuevas estrellas.</p>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <img
+            src="https://commons.wikimedia.org/wiki/Special:FilePath/Crab_Nebula.jpg"
+            alt="Nebulosa del Cangrejo">
+
+          <div class="carousel-caption">
+            <h3>Supernovas</h3>
+            <p>Las grandes explosiones de las estrellas.</p>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <img
+            src="https://commons.wikimedia.org/wiki/Special:FilePath/Comet_Hale-Bopp_1997.jpg"
+            alt="Cometa">
+
+          <div class="carousel-caption">
+            <h3>Cometas</h3>
+            <p>Viajeros helados del sistema solar.</p>
+          </div>
+        </div>
+
+      </div>
+
+
+      <button class="carousel-control-prev"
+        type="button"
+        data-bs-target="#carouselObjetos"
+        data-bs-slide="prev">
+
+        <span class="carousel-control-prev-icon"></span>
+        <span class="visually-hidden">Anterior</span>
+
+      </button>
+
+      <button class="carousel-control-next"
+        type="button"
+        data-bs-target="#carouselObjetos"
+        data-bs-slide="next">
+
+        <span class="carousel-control-next-icon"></span>
+        <span class="visually-hidden">Siguiente</span>
+
+      </button>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================================================
+       CURIOSIDADES
+       ========================================================= -->
+  <section class="section" id="curiosidades">
+
+    <h2 class="section-title">
+      Curiosidades del Cosmos
+    </h2>
+
+    <p class="section-sub">
+      Datos que te dejarán con la boca abierta
+    </p>
+
+    <div class="fact-grid" id="factGrid"></div>
+
+
+    <!-- CARRUSEL CURIOSIDADES -->
+    <div id="carouselCuriosidades"
+         class="carousel slide carousel-fade astro-carousel"
+         data-bs-ride="carousel"
+         data-bs-interval="3500">
+
+      <div class="carousel-indicators">
+
+        <button type="button"
+          data-bs-target="#carouselCuriosidades"
+          data-bs-slide-to="0"
+          class="active"
+          aria-current="true"
+          aria-label="Universo">
+        </button>
+
+        <button type="button"
+          data-bs-target="#carouselCuriosidades"
+          data-bs-slide-to="1"
+          aria-label="Estación espacial">
+        </button>
+
+        <button type="button"
+          data-bs-target="#carouselCuriosidades"
+          data-bs-slide-to="2"
+          aria-label="Luna">
+        </button>
+
+      </div>
+
+
+      <div class="carousel-inner">
+
+        <div class="carousel-item active">
+          <img
+            src="https://commons.wikimedia.org/wiki/Special:FilePath/Hubble_ultra_deep_field.jpg"
+            alt="Universo profundo">
+
+          <div class="carousel-caption">
+            <h3>El universo es enorme</h3>
+            <p>Existen miles de millones de galaxias observables.</p>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <img
+            src="https://commons.wikimedia.org/wiki/Special:FilePath/International_Space_Station_after_undocking_of_STS-132.jpg"
+            alt="Estación Espacial Internacional">
+
+          <div class="carousel-caption">
+            <h3>Humanos en el espacio</h3>
+            <p>La exploración espacial continúa alrededor de nuestro planeta.</p>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <img
+            src="https://commons.wikimedia.org/wiki/Special:FilePath/Full_Moon_Luc_Viatour.jpg"
+            alt="Luna llena">
+
+          <div class="carousel-caption">
+            <h3>La Luna</h3>
+            <p>Nuestro satélite natural se aleja lentamente de la Tierra.</p>
+          </div>
+        </div>
+
+      </div>
+
+
+      <button class="carousel-control-prev"
+        type="button"
+        data-bs-target="#carouselCuriosidades"
+        data-bs-slide="prev">
+
+        <span class="carousel-control-prev-icon"></span>
+        <span class="visually-hidden">Anterior</span>
+
+      </button>
+
+      <button class="carousel-control-next"
+        type="button"
+        data-bs-target="#carouselCuriosidades"
+        data-bs-slide="next">
+
+        <span class="carousel-control-next-icon"></span>
+        <span class="visually-hidden">Siguiente</span>
+
+      </button>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================
+       FOOTER
+       ========================= -->
+  <footer class="footer">
+
+    <div class="footer__brand">
+      Astro<span>Explora</span>
+    </div>
+
+    <p class="footer__text">
+      Educación astronómica para mentes curiosas · Inspirado en la exploración espacial
+    </p>
+
+    <p class="footer__note">
+      Hecho con Cariño Beymar Mamani Machaca Derechos Reservados...
+    </p>
+
+  </footer>
+
+
+
+  <!-- =========================
+       MODAL
+       ========================= -->
+  <div class="modal" id="modal" aria-hidden="true">
+
+    <div class="modal__backdrop" data-close></div>
+
+    <div class="modal__card" role="dialog" aria-modal="true">
+
+      <button
+        class="modal__close"
+        data-close
+        aria-label="Cerrar">
+        &times;
+      </button>
+
+      <div class="modal__body" id="modalBody"></div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- Bootstrap JS -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+  </script>
+
+  <!-- Tu JavaScript -->
+  <script src="script.js"></script>
+
+</body>
+</html>
