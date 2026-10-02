@@ -1,0 +1,619 @@
+/* ============================================================
+   AstroExplora — Hoja de estilos
+   Paleta: azul oscuro, negro, morado, blanco,
+   acentos azul brillante y amarillo (estrellas/planetas)
+   ============================================================ */
+
+:root {
+  --negro: #05060f;
+  --azul-oscuro: #0a0e27;
+  --azul-profundo: #101736;
+  --morado: #6d28d9;
+  --morado-claro: #8b5cf6;
+  --azul-brillante: #38bdf8;
+  --amarillo: #facc15;
+  --blanco: #f8fafc;
+  --gris: #94a3b8;
+  --font-titulo: 'Orbitron', sans-serif;
+  --font-texto: 'Inter', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--negro);
+  color: var(--blanco);
+  font-family: var(--font-texto);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+#starfield {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+main, section, header, footer { position: relative; z-index: 1; }
+
+/* ---------- NAV ---------- */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: rgba(5, 6, 15, 0.75);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+  z-index: 100;
+  transition: background 0.3s;
+}
+
+.nav__logo {
+  font-family: var(--font-titulo);
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--blanco);
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+.nav__logo span { color: var(--azul-brillante); }
+
+.nav__links { display: flex; gap: 1.8rem; }
+.nav__links a {
+  color: var(--gris);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 400;
+  transition: color 0.25s;
+  position: relative;
+}
+.nav__links a::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -4px;
+  width: 0; height: 2px;
+  background: var(--azul-brillante);
+  transition: width 0.25s;
+}
+.nav__links a:hover { color: var(--blanco); }
+.nav__links a:hover::after { width: 100%; }
+
+.nav__toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+.nav__toggle span {
+  width: 24px; height: 2px;
+  background: var(--blanco);
+  transition: 0.3s;
+}
+
+/* ---------- HERO ---------- */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 6rem 2rem 4rem;
+  position: relative;
+}
+
+.hero__content { max-width: 800px; }
+
+.hero__tag {
+  color: var(--azul-brillante);
+  font-size: 0.85rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.hero__title {
+  font-family: var(--font-titulo);
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+
+.hero__gradient {
+  background: linear-gradient(120deg, var(--azul-brillante), var(--morado-claro), var(--amarillo));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero__subtitle {
+  color: var(--gris);
+  font-size: 1.15rem;
+  max-width: 600px;
+  margin: 0 auto 2.5rem;
+  font-weight: 300;
+}
+
+.hero__actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+.btn {
+  padding: 0.9rem 2rem;
+  border-radius: 50px;
+  font-family: var(--font-texto);
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.25s, box-shadow 0.25s;
+  border: none;
+}
+.btn--primary {
+  background: linear-gradient(120deg, var(--morado), var(--azul-brillante));
+  color: var(--blanco);
+  box-shadow: 0 4px 24px rgba(109, 40, 217, 0.4);
+}
+.btn--primary:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(56, 189, 248, 0.5); }
+.btn--ghost {
+  background: transparent;
+  color: var(--blanco);
+  border: 1px solid rgba(139, 92, 246, 0.5);
+}
+.btn--ghost:hover { background: rgba(139, 92, 246, 0.15); transform: translateY(-3px); }
+
+/* Planeta decorativo del hero */
+.hero__planet {
+  position: absolute;
+  right: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 320px; height: 320px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+@media (min-width: 1100px) { .hero__planet { display: flex; } }
+
+.planet--hero {
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, var(--morado-claro), var(--morado) 55%, #2e1065);
+  box-shadow: inset -20px -20px 60px rgba(0,0,0,0.6), 0 0 80px rgba(139, 92, 246, 0.35);
+  animation: float 6s ease-in-out infinite;
+}
+.planet__ring {
+  position: absolute;
+  width: 340px; height: 90px;
+  border: 2px solid rgba(250, 204, 21, 0.35);
+  border-radius: 50%;
+  transform: rotate(-18deg);
+  animation: float 6s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-18px); }
+}
+
+.hero__scroll {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 26px; height: 42px;
+  border: 2px solid var(--gris);
+  border-radius: 14px;
+  display: flex;
+  justify-content: center;
+  padding-top: 7px;
+}
+.hero__scroll span {
+  width: 4px; height: 8px;
+  background: var(--azul-brillante);
+  border-radius: 2px;
+  animation: scrollDot 1.6s infinite;
+}
+@keyframes scrollDot {
+  0% { transform: translateY(0); opacity: 1; }
+  70% { transform: translateY(14px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 0; }
+}
+
+/* ---------- INTRO ---------- */
+.intro {
+  padding: 6rem 2rem;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.intro__text {
+  color: var(--gris);
+  font-size: 1.1rem;
+  font-weight: 300;
+  margin-bottom: 3rem;
+}
+.intro__text strong { color: var(--amarillo); font-weight: 600; }
+
+.intro__stats {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.stat { min-width: 180px; }
+.stat__num {
+  display: block;
+  font-family: var(--font-titulo);
+  font-size: 2.6rem;
+  font-weight: 900;
+  color: var(--azul-brillante);
+}
+.stat__label { color: var(--gris); font-size: 0.9rem; }
+
+/* ---------- SECCIONES ---------- */
+.section { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; }
+
+.section-title {
+  font-family: var(--font-titulo);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(120deg, var(--blanco), var(--azul-brillante));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.section-sub {
+  text-align: center;
+  color: var(--gris);
+  margin-bottom: 3rem;
+  font-weight: 300;
+}
+
+/* ---------- GRIDS ---------- */
+.planet-grid, .star-grid, .galaxy-grid, .object-grid, .fact-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+.planet-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.star-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.galaxy-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.object-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.fact-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+
+/* ---------- TARJETAS ---------- */
+.card {
+  background: linear-gradient(160deg, var(--azul-oscuro), var(--azul-profundo));
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  border-radius: 18px;
+  padding: 1.8rem;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--morado), var(--azul-brillante));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(109, 40, 217, 0.3);
+  border-color: rgba(56, 189, 248, 0.5);
+}
+.card:hover::before { opacity: 1; }
+
+.card__icon {
+  font-size: 2.6rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+.card__title {
+  font-family: var(--font-titulo);
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  color: var(--blanco);
+}
+.card__text {
+  color: var(--gris);
+  font-size: 0.92rem;
+  font-weight: 300;
+}
+.card__hint {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: var(--azul-brillante);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* ---------- MODAL ---------- */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+.modal.open { opacity: 1; visibility: visible; }
+
+.modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 6, 15, 0.85);
+  backdrop-filter: blur(6px);
+}
+
+.modal__card {
+  position: relative;
+  background: linear-gradient(160deg, var(--azul-oscuro), var(--azul-profundo));
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  border-radius: 22px;
+  max-width: 560px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 2.5rem;
+  transform: translateY(24px) scale(0.97);
+  transition: transform 0.3s;
+}
+.modal.open .modal__card { transform: translateY(0) scale(1); }
+
+.modal__close {
+  position: absolute;
+  top: 1rem; right: 1.2rem;
+  background: none;
+  border: none;
+  color: var(--gris);
+  font-size: 1.8rem;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s;
+}
+.modal__close:hover { color: var(--blanco); }
+
+.modal__body h3 {
+  font-family: var(--font-titulo);
+  font-size: 1.6rem;
+  margin-bottom: 0.4rem;
+  color: var(--azul-brillante);
+}
+.modal__body .modal__tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--amarillo);
+  margin-bottom: 1.2rem;
+}
+.modal__body p { color: var(--gris); font-weight: 300; margin-bottom: 1rem; }
+.modal__body ul { list-style: none; margin-top: 0.5rem; }
+.modal__body li {
+  color: var(--gris);
+  padding: 0.4rem 0;
+  border-bottom: 1px solid rgba(139, 92, 246, 0.15);
+  font-size: 0.95rem;
+}
+.modal__body li strong { color: var(--blanco); font-weight: 600; }
+
+/* ---------- FOOTER ---------- */
+.footer {
+  text-align: center;
+  padding: 4rem 2rem;
+  border-top: 1px solid rgba(139, 92, 246, 0.2);
+  background: var(--azul-oscuro);
+}
+.footer__brand {
+  font-family: var(--font-titulo);
+  font-size: 1.6rem;
+  font-weight: 900;
+  margin-bottom: 0.8rem;
+}
+.footer__brand span { color: var(--azul-brillante); }
+.footer__text { color: var(--gris); font-size: 0.95rem; }
+.footer__note { color: var(--morado-claro); font-size: 0.85rem; margin-top: 0.5rem; }
+
+/* ---------- ANIMACIONES DE APARICIÓN ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+  .nav__links {
+    position: fixed;
+    top: 60px; right: 0;
+    flex-direction: column;
+    background: rgba(5, 6, 15, 0.97);
+    width: 100%;
+    padding: 1.5rem 2rem;
+    gap: 1.2rem;
+    border-bottom: 1px solid rgba(139, 92, 246, 0.3);
+    transform: translateY(-150%);
+    transition: transform 0.35s;
+  }
+  .nav__links.open { transform: translateY(0); }
+  .nav__toggle { display: flex; }
+  .hero__planet { display: none; }
+  .section { padding: 3.5rem 1.2rem; }
+}
+
+
+/* ============================================================
+   CARRUSELES ASTROEXPLORA
+   ============================================================ */
+
+.astro-carousel {
+  width: 100%;
+  max-width: 1100px;
+  margin: 4rem auto 1rem;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #05060f;
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.45);
+}
+
+/* Todas las imágenes tienen exactamente el mismo tamaño */
+.astro-carousel .carousel-item {
+  height: 480px;
+  background: #05060f;
+}
+
+/* Imágenes */
+.astro-carousel .carousel-item img {
+  width: 100%;
+  height: 480px;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Capa oscura para que el texto sea visible */
+.astro-carousel .carousel-item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(5, 6, 15, 0.85),
+    rgba(5, 6, 15, 0.05) 60%
+  );
+  pointer-events: none;
+}
+
+/* Texto del carrusel */
+.astro-carousel .carousel-caption {
+  z-index: 3;
+  bottom: 35px;
+  text-align: center;
+}
+
+.astro-carousel .carousel-caption h3 {
+  font-family: var(--font-titulo);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--blanco);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.astro-carousel .carousel-caption p {
+  color: var(--blanco);
+  font-size: 0.95rem;
+  margin-bottom: 0;
+}
+
+/* Botones */
+.astro-carousel .carousel-control-prev,
+.astro-carousel .carousel-control-next {
+  width: 10%;
+  z-index: 4;
+}
+
+/* Indicadores */
+.astro-carousel .carousel-indicators {
+  z-index: 5;
+  margin-bottom: 12px;
+}
+
+.astro-carousel .carousel-indicators button {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  margin: 0 5px;
+}
+
+/* Efecto al pasar sobre el carrusel */
+.astro-carousel:hover {
+  border-color: rgba(56, 189, 248, 0.45);
+  box-shadow: 0 20px 60px rgba(109, 40, 217, 0.25);
+}
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 768px) {
+
+  .astro-carousel {
+    margin-top: 2.5rem;
+    border-radius: 14px;
+  }
+
+  .astro-carousel .carousel-item {
+    height: 350px;
+  }
+
+  .astro-carousel .carousel-item img {
+    height: 350px;
+  }
+
+  .astro-carousel .carousel-caption {
+    bottom: 25px;
+    padding: 0 50px;
+  }
+
+  .astro-carousel .carousel-caption h3 {
+    font-size: 1.15rem;
+  }
+
+  .astro-carousel .carousel-caption p {
+    font-size: 0.8rem;
+  }
+
+}
+
+
+/* Celulares pequeños */
+
+@media (max-width: 480px) {
+
+  .astro-carousel .carousel-item {
+    height: 270px;
+  }
+
+  .astro-carousel .carousel-item img {
+    height: 270px;
+  }
+
+  .astro-carousel .carousel-caption {
+    bottom: 20px;
+    padding: 0 45px;
+  }
+
+  .astro-carousel .carousel-caption h3 {
+    font-size: 1rem;
+  }
+
+  .astro-carousel .carousel-caption p {
+    font-size: 0.72rem;
+  }
+
+}
